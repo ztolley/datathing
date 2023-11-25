@@ -2,13 +2,15 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["multiSchema"]
 }
 
 datasource db {
     provider  = "postgresql"
     url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
     directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+    schemas   = ["public", "datathing"]
 }
 
 model users {
@@ -19,4 +21,5 @@ model users {
     createdAt DateTime @default(now())
 
     @@map("datathing_users")
+    @@schema("datathing")
 }
